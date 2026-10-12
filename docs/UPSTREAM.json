@@ -1,0 +1,30 @@
+{
+  "owner": "Caviar",
+  "module": "github.com/superbiche/caviar",
+  "source_kind": "git-tree",
+  "source_path": "redact",
+  "source": "ba4ce5b2b7ae1fcb2b39f5c0f9aec13358c05eb7",
+  "runtime_files": {
+    "locate.go": "c33e4db46fbb2c6e4099f39acd22700ae60b87b10b26ff7a06411da751c7dc9d",
+    "pyword_table.go": "95866ee260219e3d7b5de9fa016bc798b36f9ecd49453245aeb23a3c8a8dafe9",
+    "redact.go": "4ad188ca9c2ea4957f55b310b04775b6fefd7bcc218185220af836d83cd4b521"
+  },
+  "license_sha256": "0d96a4ff68ad6d4b6f1f30f713b18d5184912ba8dd389f86aa7710db079abcb0",
+  "rules": "redact-v7",
+  "spec_sha256": "ced8fa576b7d917dc5dab373d56ac98ab4922e6a63d1043977cbaeee62337ba2",
+  "reference_sha256": "912dde200e9348bf6f548e99760e8c2a9f245ae0b17baa180663f50a0c82f507",
+  "corpus_sha256": "d17eb1da7ef35fb4c10a9021357576c66443da897a43cef3fc3a58d18d962e67",
+  "corpus_fixture": "tmp/fixtures/redact-v7-corpus.jsonl",
+  "corpus_format": "jsonl",
+  "corpus_counts": {
+    "seeds": 598,
+    "parity_cases": 1336,
+    "p4_rows": 326
+  },
+  "contract_commit": "aeaed8e553278843b5f13d25cf82ed64ffdb4812",
+  "ancestor_core_tree": "a4cfcc0f95a8fe10fc85e3eb9c69b432418acc21",
+  "public_inputs": {
+    "corpus": "redact-v7-corpus-public-20261012.jsonl",
+    "reference": "redact-v7-reference-public-20261012.py"
+  }
+}

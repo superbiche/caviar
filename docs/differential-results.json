@@ -1,0 +1,24 @@
+{
+  "seed": 13263110,
+  "cases": 10000,
+  "comparisons": 40000,
+  "differences": [],
+  "input_sha256": "5d20aafa6ced6cd644f98ed64697eb37927efa3bd4cf0b3fcfd7948b590ffa85",
+  "identity": {
+    "protocol": 1,
+    "release": "0.3.0",
+    "rules": "redact-v7",
+    "source": "ba4ce5b2b7ae1fcb2b39f5c0f9aec13358c05eb7",
+    "corpus": "d17eb1da7ef35fb4c10a9021357576c66443da897a43cef3fc3a58d18d962e67"
+  },
+  "reference_sha256": "912dde200e9348bf6f548e99760e8c2a9f245ae0b17baa180663f50a0c82f507",
+  "binding_path": "tmp/delivery-work/installed/public-v7-r3/caviar_redact",
+  "text_cap": 65536,
+  "tree_depth_cap": 32,
+  "artifact_hashes": {
+    "client.py": "c6ae51ddd2feaab668a97eda1fcdfedb219656bbfd9b7df602543d09975c84fe",
+    "__init__.py": "03ece0a7175aa39b5689352987e3ee037cf552013766b32feffc732bb6333dee",
+    "_bin/manifest.json": "255d0ad8a68a7da23bc3ba64bd969207f0875ea34483f887d215a7bb6a504243",
+    "_bin/caviar-redact-worker": "a9d85e91e0e9e440f0cab5882a4509d76766de3ac58f2c1d0d888a9488cd3713"
+  }
+}

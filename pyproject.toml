@@ -1,0 +1,21 @@
+[build-system]
+requires = ["setuptools==80.10.2"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "caviar-redact"
+version = "0.3.0"
+description = "Fail-closed redact-v7 client with a self-owned native Go core"
+requires-python = ">=3.14,<3.15"
+license = "AGPL-3.0-only"
+license-files = ["LICENSE", "docs/THIRD-PARTY-NOTICES.md"]
+readme = "README.md"
+dependencies = []
+
+[tool.setuptools]
+package-dir = {"" = "python"}
+packages = ["caviar_redact"]
+include-package-data = false
+
+[tool.setuptools.package-data]
+caviar_redact = ["_bin/caviar-redact-worker", "_bin/manifest.json"]
