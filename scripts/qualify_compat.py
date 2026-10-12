@@ -12,6 +12,7 @@ import platform
 import statistics
 import sys
 import time
+import tomllib
 from canonical_results import digest
 from caviar_redact import Client, CaviarError
 from caviar_redact.client import _manifest_identity
@@ -39,10 +40,11 @@ def run(args):
     package = Path(sys.modules['caviar_redact'].__file__).resolve().parent
     assert package.is_relative_to(ROOT / 'tmp/delivery-work/installed'), 'installed binding required'
     identity = _manifest_identity(json.loads((package / '_bin/manifest.json').read_text()))
-    assert importlib.metadata.version('caviar-redact') == identity['release'] == '0.3.1'
-    wheel = ROOT / 'dist/caviar_redact-0.3.1-py3-none-linux_x86_64.whl'
+    release = tomllib.loads((ROOT / 'pyproject.toml').read_text())['project']['version']
+    assert importlib.metadata.version('caviar-redact') == identity['release'] == release
+    wheel = ROOT / ('dist/caviar_redact-' + release + '-py3-none-linux_x86_64.whl')
     result = {'identity': identity, 'artifact_hashes': {n: digest(package / n) for n in
-              ('__init__.py', 'client.py', '_bin/caviar-redact-worker', '_bin/manifest.json')},
+              ('__init__.py', 'client.py', 'pool.py', '_bin/caviar-redact-worker', '_bin/manifest.json')},
               'wheel_sha256': digest(wheel), 'reference_sha256': pins['reference_sha256'],
               'oracle': meta, 'python': platform.python_version(), 'platform': platform.platform(),
               'binding_path': str(package), 'samples_per_row': 30, 'warmups': 1,

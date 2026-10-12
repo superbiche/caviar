@@ -3,5 +3,6 @@
 
 """Fail-closed, synchronous client for the paired native worker."""
 from .client import Client, CaviarError
+from .pool import Pool
 
-__all__ = ["Client", "CaviarError"]
+__all__ = ["Client", "CaviarError", "Pool"]

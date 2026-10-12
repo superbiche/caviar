@@ -1,18 +1,19 @@
 {
   "identity": {
     "protocol": 1,
-    "release": "0.3.1",
+    "release": "0.4.0",
     "rules": "redact-v7",
     "source": "ba4ce5b2b7ae1fcb2b39f5c0f9aec13358c05eb7",
     "corpus": "d17eb1da7ef35fb4c10a9021357576c66443da897a43cef3fc3a58d18d962e67"
   },
   "artifact_hashes": {
-    "__init__.py": "03ece0a7175aa39b5689352987e3ee037cf552013766b32feffc732bb6333dee",
+    "__init__.py": "2bb022ec5236783e74752877b73e5439463fc5c2d762c4c39294741f404af495",
     "client.py": "c6ae51ddd2feaab668a97eda1fcdfedb219656bbfd9b7df602543d09975c84fe",
-    "_bin/caviar-redact-worker": "41b7d5cd9cf51fd73b37e53b6ccc2c06b7b23edef070124cabe64ee62496c014",
-    "_bin/manifest.json": "282cb13461fb188ecaaeedd004541abb5752951ab33bc6d927c3f6d70bbf01eb"
+    "pool.py": "0577483a4f1ee2e96b060ab026bfae8ed769eb6872ca685560ab39a09238688b",
+    "_bin/caviar-redact-worker": "71b7460862cf19a7e6e58c1c373f9463d9bc91048535a6edd4d354093ff5b378",
+    "_bin/manifest.json": "806ca5510388ed836066306983f951375a041cd0d7a011d4a2b038a0aa195d07"
   },
-  "wheel_sha256": "91e315d1a3a57b5cc3fdd648e3f8d63e80b534ee93a41ac31a9ae818644a22ac",
+  "wheel_sha256": "c2b4940cce8e6197a3335ab230fcfe589737bdca12d79fdaa3c1be04a6e00fea",
   "reference_sha256": "912dde200e9348bf6f548e99760e8c2a9f245ae0b17baa180663f50a0c82f507",
   "oracle": {
     "kind": "differential",
@@ -22,26 +23,26 @@
     "reference_sha256": "912dde200e9348bf6f548e99760e8c2a9f245ae0b17baa180663f50a0c82f507",
     "corpus_sha256": "d17eb1da7ef35fb4c10a9021357576c66443da897a43cef3fc3a58d18d962e67",
     "seed": 13263110,
-    "generator_sha256": "919895a8c1041ce1d1d0195ef7072521a29bbe52e85aa4b742d80ed0cc962dca",
+    "generator_sha256": "21fba1bc9ebddf6629562941e17cf4f6194ab9190932603a4ce19c4751411685",
     "sha256": "b3a9b3e963a8b1f9ca1a1a462aaeafc9cca2a666e0f2a534959caf73c54d9728"
   },
   "python": "3.12.15",
   "platform": "Linux-7.2.9-200.fc44.x86_64-x86_64-with-glibc2.43",
-  "binding_path": "tmp/delivery-work/installed/compat-031/caviar_redact",
+  "binding_path": "tmp/delivery-work/installed/compat-040/caviar_redact",
   "samples_per_row": 30,
   "warmups": 1,
   "cases": 10000,
   "mismatches": [],
   "p4_rows": [],
   "load_before": [
-    4.2529296875,
-    4.34716796875,
-    3.8740234375
+    12.0791015625,
+    12.21435546875,
+    12.32275390625
   ],
   "load_after": [
-    3.9921875,
-    4.29150390625,
-    3.8583984375
+    11.83935546875,
+    12.1572265625,
+    12.302734375
   ],
   "worst_ratio": null,
   "p4_over_budget": [],

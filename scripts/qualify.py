@@ -52,7 +52,7 @@ def run(args):
     references = {False: module.Redactor(), True: module.Redactor(key=key)}
     clients = {False: Client(None, allow_plain=True), True: Client(key)}
     artifacts = {name: hashlib.sha256((package_dir / name).read_bytes()).hexdigest()
-                 for name in ("__init__.py", "client.py", "_bin/caviar-redact-worker", "_bin/manifest.json")}
+                 for name in ("__init__.py", "client.py", "pool.py", "_bin/caviar-redact-worker", "_bin/manifest.json")}
     wheel = ROOT / "dist" / ("caviar_redact-" + identity["release"] + "-py3-none-linux_x86_64.whl")
     result = {"artifact_hashes": artifacts,
               "wheel_sha256": hashlib.sha256(wheel.read_bytes()).hexdigest(),

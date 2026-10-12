@@ -52,7 +52,7 @@ vulnerability reporting channel must be enabled before a public push or tag.
 
 ## Python compatibility qualification
 
-Build with the qualified CPython 3.14 backend. The immutable 0.3.1 wheel supports
+Build with the qualified CPython 3.14 backend. The immutable 0.4.0 wheel supports
 CPython 3.12, 3.13 and 3.14 on Linux/amd64. `make build` performs the offline
 build; `make test` prepares the pinned fixtures, verifies provenance, runs
 `go test` and `go vet`, and runs unittest discovery using `PYTHON` and the
@@ -81,12 +81,12 @@ python3.14 scripts/canonical_results.py --kind differential --output tmp/oracle/
 The files use exclusive creation. Preserve their `.meta.json` files and exact
 hashes; a partial run must be removed deliberately before a new preparation.
 For each minor, select the installed wheel through `PYTHONPATH` and run both
-campaigns. For example, with the installed target `compat-031`:
+campaigns. For example, with the installed target `compat-040`:
 
 ```sh
-PYTHONPATH=tmp/delivery-work/installed/compat-031 python3.12 scripts/qualify_compat.py \
+PYTHONPATH=tmp/delivery-work/installed/compat-040 python3.12 scripts/qualify_compat.py \
   --oracle tmp/oracle/corpus.jsonl --output tmp/qualification-3.12.json
-PYTHONPATH=tmp/delivery-work/installed/compat-031 python3.12 scripts/qualify_compat.py \
+PYTHONPATH=tmp/delivery-work/installed/compat-040 python3.12 scripts/qualify_compat.py \
   --oracle tmp/oracle/differential.jsonl --output tmp/differential-3.12.json
 ```
 

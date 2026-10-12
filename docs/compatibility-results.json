@@ -1,6 +1,6 @@
 {
-  "release": "0.3.1",
-  "wheel_sha256": "91e315d1a3a57b5cc3fdd648e3f8d63e80b534ee93a41ac31a9ae818644a22ac",
+  "release": "0.4.0",
+  "wheel_sha256": "c2b4940cce8e6197a3335ab230fcfe589737bdca12d79fdaa3c1be04a6e00fea",
   "current_oracles": {
     "corpus": {
       "kind": "corpus",
@@ -29,16 +29,16 @@
     "3.12": {
       "qualification": {
         "path": "docs/qualification-3.12.json",
-        "sha256": "d1cfcb305a3eb1f9c6602aecab3ab8fccb19983e383311e970a9f9f8d09cbc5c"
+        "sha256": "4d33482d01316e14762e22f5c26ab8fcd6d9a6f3ec9661ed4fb09fba597da40e"
       },
       "differential": {
         "path": "docs/differential-3.12.json",
-        "sha256": "81287d5fe0a3d91c83930fda845968e0a6de61f88f78a803011478d06da5ca7e"
+        "sha256": "312c97cb1710e039f943368960b1beb777c1ed675c70b64c8a730b53bdb2e396"
       },
       "lifecycle": {
         "exit": 0,
-        "tests": 35,
-        "log_sha256": "ea951f85fb79f3eee7efe29cc7c557935ef5ff9cda65f8a82b982a6c0e750a30"
+        "tests": 47,
+        "log_sha256": "2bfbfe9be18a35a1da90f6c6d76ac6b4df0cca87026ff1b9446bfaaa78d69a1b"
       },
       "ready_identity_mutant": {
         "exit": 1,
@@ -49,16 +49,16 @@
     "3.13": {
       "qualification": {
         "path": "docs/qualification-3.13.json",
-        "sha256": "98b1b1f32baefc49c81e5f4d89470f8eab1e295e34f7cbd41fc9dca7a58d7cca"
+        "sha256": "ec80473c15a0eebdd2e61c1a871f406860791bcdb6fc112fd4519a427d15de36"
       },
       "differential": {
         "path": "docs/differential-3.13.json",
-        "sha256": "0d16215fd1b6a928f941e5ed3de9637dac44db881cd74bd7d10d0fbcbfc9240b"
+        "sha256": "8981272dc3d895e43d3309dddc06a4d25fb2dca1395f5a405c6eaf372b9e94f2"
       },
       "lifecycle": {
         "exit": 0,
-        "tests": 35,
-        "log_sha256": "433adeb972547367474e4c57185b2a91f2bb9ebb2da5e5388e51226a724c2dfd"
+        "tests": 47,
+        "log_sha256": "d3ce64cf9fae9b7ead0f9f84477a534e8590c9888c86ae0f81c251739a1f609e"
       },
       "ready_identity_mutant": {
         "exit": 1,
@@ -69,16 +69,16 @@
     "3.14": {
       "qualification": {
         "path": "docs/qualification-3.14.json",
-        "sha256": "f99e261f16cb6dfab2b8069f6e2b7d8380ad6bfc19ec20955db691a08f10adc5"
+        "sha256": "da9e5bfa813dda267d129aedee97a068ee9fd03790165b756c772bba3675daff"
       },
       "differential": {
         "path": "docs/differential-3.14.json",
-        "sha256": "30b58b2922747cb6d954f5d055239f234acb9fd2e3a695b631bb3ade57c337cc"
+        "sha256": "b032fce580e94d07639692e8e40c6e2beab78ccae692803a1e44090a03f72ee0"
       },
       "lifecycle": {
         "exit": 0,
-        "tests": 35,
-        "log_sha256": "10500afdec2b536259f292bf59886ce1a9b461e9838df74e77e03b85cadf3e01"
+        "tests": 47,
+        "log_sha256": "43ec5cdbee30f7dfaa4c29870888745aa189cb4246920e9c858a1e135a4b33b1"
       },
       "ready_identity_mutant": {
         "exit": 1,

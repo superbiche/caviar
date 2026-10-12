@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.4.0
+
+- Add `Pool`, a bounded pool of N serial workers for concurrent calls. Each
+  client keeps its own worker process and trust-domain key copy; admission
+  waits at most `acquire_timeout` before refusing `busy`. `close()` is terminal
+  and idempotent. Adds `invalid_size` and `invalid_acquire_timeout` codes.
+
 ## 0.3.1
 
 - Qualify the installed Python binding on CPython 3.12, 3.13 and 3.14.

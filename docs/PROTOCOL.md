@@ -31,6 +31,20 @@ response checks. One client admits one call at a time; concurrency refuses
 `busy`. Use separate clients for separate trust domains and reload keys by
 creating a new client.
 
+A `Pool` of N clients admits up to N concurrent calls. Each client keeps one
+worker process and one trust-domain key copy, so a stuck call is killed at its
+own deadline by its own client without affecting the other workers. Admission
+waits at most `acquire_timeout` for an idle client, then refuses `busy`; the
+client deadline starts at admission, so the worst case is `acquire_timeout +
+timeout`. A failed call returns its client to the pool and is never replayed on
+another worker. `close()` is terminal and idempotent: it never waits for
+in-flight calls, closes every client, releases admission waiters with `closed`,
+and later calls raise `closed`. In a forked child, calls refuse
+`forked_client`, and `close()` disposes of only that process's pipe copies
+without blocking on inherited state or touching the parent's workers. The
+input-immutability rule applies per call. The pool adds
+`invalid_size` and `invalid_acquire_timeout` to the stable codes.
+
 Malformed replies, wrong identity, worker death, core errors and timeouts raise
 `CaviarError` with a stable code and no fallback content. A broken generation is
 killed and reaped; a later call may create a fresh worker. Failed requests are

@@ -15,7 +15,7 @@ def verify():
     pins = json.loads((ROOT / 'docs/UPSTREAM.json').read_text())
     release = tomllib.loads((ROOT / 'pyproject.toml').read_text())['project']['version']
     matrix = json.loads((ROOT / 'docs/compatibility-results.json').read_text())
-    assert release == matrix['release'] == '0.3.1'
+    assert release == matrix['release']
     assert set(matrix['targets']) == {'3.12', '3.13', '3.14'}
     current_oracles = matrix['current_oracles']
     assert set(current_oracles) == {'corpus', 'differential'}
@@ -63,7 +63,7 @@ def verify():
                 assert not evidence['differences']
         assert files['lifecycle']['exit'] == 0 and files['ready_identity_mutant']['exit'] != 0
     assert len(corpus_oracles) == len(diff_oracles) == len(input_streams) == 1
-    wheel = ROOT / 'dist/caviar_redact-0.3.1-py3-none-linux_x86_64.whl'
+    wheel = ROOT / ('dist/caviar_redact-' + release + '-py3-none-linux_x86_64.whl')
     assert hashlib.sha256(wheel.read_bytes()).hexdigest() == matrix['wheel_sha256']
     print('Three-minor canonical-oracle installed compatibility evidence: PASS')
 
