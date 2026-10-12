@@ -78,6 +78,8 @@ subprocess.run(["python3", "scripts/check_qualification.py"], cwd=candidate, env
 receipts["installed_qualification"] = "PASS"
 subprocess.run(["python3", "scripts/check_differential.py"], cwd=candidate, env=env, check=True)
 receipts["installed_differential"] = "PASS"
+subprocess.run(["python3", "scripts/check_compatibility.py"], cwd=candidate, env=env, check=True)
+receipts["installed_compatibility"] = "PASS"
 scan_tree = WORK / "scan-delivery"
 if scan_tree.exists():
     shutil.rmtree(scan_tree)

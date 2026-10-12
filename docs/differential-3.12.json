@@ -1,0 +1,54 @@
+{
+  "identity": {
+    "protocol": 1,
+    "release": "0.3.1",
+    "rules": "redact-v7",
+    "source": "ba4ce5b2b7ae1fcb2b39f5c0f9aec13358c05eb7",
+    "corpus": "d17eb1da7ef35fb4c10a9021357576c66443da897a43cef3fc3a58d18d962e67"
+  },
+  "artifact_hashes": {
+    "__init__.py": "03ece0a7175aa39b5689352987e3ee037cf552013766b32feffc732bb6333dee",
+    "client.py": "c6ae51ddd2feaab668a97eda1fcdfedb219656bbfd9b7df602543d09975c84fe",
+    "_bin/caviar-redact-worker": "41b7d5cd9cf51fd73b37e53b6ccc2c06b7b23edef070124cabe64ee62496c014",
+    "_bin/manifest.json": "282cb13461fb188ecaaeedd004541abb5752951ab33bc6d927c3f6d70bbf01eb"
+  },
+  "wheel_sha256": "91e315d1a3a57b5cc3fdd648e3f8d63e80b534ee93a41ac31a9ae818644a22ac",
+  "reference_sha256": "912dde200e9348bf6f548e99760e8c2a9f245ae0b17baa180663f50a0c82f507",
+  "oracle": {
+    "kind": "differential",
+    "records": 40000,
+    "oracle_python": "3.14.8",
+    "oracle_implementation": "cpython",
+    "reference_sha256": "912dde200e9348bf6f548e99760e8c2a9f245ae0b17baa180663f50a0c82f507",
+    "corpus_sha256": "d17eb1da7ef35fb4c10a9021357576c66443da897a43cef3fc3a58d18d962e67",
+    "seed": 13263110,
+    "generator_sha256": "919895a8c1041ce1d1d0195ef7072521a29bbe52e85aa4b742d80ed0cc962dca",
+    "sha256": "b3a9b3e963a8b1f9ca1a1a462aaeafc9cca2a666e0f2a534959caf73c54d9728"
+  },
+  "python": "3.12.15",
+  "platform": "Linux-7.2.9-200.fc44.x86_64-x86_64-with-glibc2.43",
+  "binding_path": "tmp/delivery-work/installed/compat-031/caviar_redact",
+  "samples_per_row": 30,
+  "warmups": 1,
+  "cases": 10000,
+  "mismatches": [],
+  "p4_rows": [],
+  "load_before": [
+    4.2529296875,
+    4.34716796875,
+    3.8740234375
+  ],
+  "load_after": [
+    3.9921875,
+    4.29150390625,
+    3.8583984375
+  ],
+  "worst_ratio": null,
+  "p4_over_budget": [],
+  "seed": 13263110,
+  "comparisons": 40000,
+  "differences": [],
+  "input_sha256": "5d20aafa6ced6cd644f98ed64697eb37927efa3bd4cf0b3fcfd7948b590ffa85",
+  "text_cap": 65536,
+  "tree_depth_cap": 32
+}

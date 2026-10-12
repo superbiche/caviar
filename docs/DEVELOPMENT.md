@@ -49,3 +49,53 @@ identity, corpus and reference. A changed payload requires new installed-route
 qualification; old receipts do not qualify new bytes. Release assets and their
 mirrors must match the reviewed wheel hash. The repository's private
 vulnerability reporting channel must be enabled before a public push or tag.
+
+## Python compatibility qualification
+
+Build with the qualified CPython 3.14 backend. The immutable 0.3.1 wheel supports
+CPython 3.12, 3.13 and 3.14 on Linux/amd64. `make build` performs the offline
+build; `make test` prepares the pinned fixtures, verifies provenance, runs
+`go test` and `go vet`, and runs unittest discovery using `PYTHON` and the
+caller-selected installed binding path.
+
+Generate canonical corpus and differential expectations once under CPython
+3.14 with `scripts/canonical_results.py`. Their metadata binds runtime,
+reference/corpus pins, generator and output hashes. Expected payloads are
+ignored test artifacts, never public fixtures or log output. Each target minor
+runs `scripts/qualify_compat.py` against its installed wheel and these same
+expectations. No reference is imported into the target interpreter; oracle
+preparation and parsing stay outside full-route P4 timings.
+
+Each minor needs its own lifecycle, 1,336 parity, 326 P4 and 40,000 differential
+comparison receipts. Do not lower Requires-Python on the existing 0.3.0 wheel
+or advertise a target that failed qualification. Publication needs independent
+review and its own approval; consumer adoption remains separately owned.
+
+Canonical preparation (CPython 3.14 only):
+
+```sh
+python3.14 scripts/canonical_results.py --kind corpus --output tmp/oracle/corpus.jsonl
+python3.14 scripts/canonical_results.py --kind differential --output tmp/oracle/differential.jsonl
+```
+
+The files use exclusive creation. Preserve their `.meta.json` files and exact
+hashes; a partial run must be removed deliberately before a new preparation.
+For each minor, select the installed wheel through `PYTHONPATH` and run both
+campaigns. For example, with the installed target `compat-031`:
+
+```sh
+PYTHONPATH=tmp/delivery-work/installed/compat-031 python3.12 scripts/qualify_compat.py \
+  --oracle tmp/oracle/corpus.jsonl --output tmp/qualification-3.12.json
+PYTHONPATH=tmp/delivery-work/installed/compat-031 python3.12 scripts/qualify_compat.py \
+  --oracle tmp/oracle/differential.jsonl --output tmp/differential-3.12.json
+```
+
+Repeat with CPython 3.13 and 3.14 and distinct result paths. Oracle input/output
+records are streamed with a 16 MiB per-record limit; no expectation is printed.
+The commit gate additionally checks the retained three-minor compatibility
+matrix. Legacy direct-reference scripts refuse non-3.14 interpreters.
+
+The retained compatibility receipts carry predecessor generator SHA256
+`919895a8c1041ce1d1d0195ef7072521a29bbe52e85aa4b742d80ed0cc962dca`
+from measurement before a trailing-newline fix; the regenerated expectation
+streams are byte-identical.

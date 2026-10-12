@@ -24,7 +24,7 @@ with Client(key, timeout=5.0) as filter:
 ```
 
 The wheel contains its static worker: consumers need no Go installation and no
-runtime fetch. Qualified platform scope is Linux/amd64 and CPython 3.14. A client
+runtime fetch. Qualified platform scope is Linux/amd64 and CPython 3.12, 3.13 and 3.14. A client
 reuses one serial worker; concurrent calls refuse with `busy`. JS/TS bindings and
 other targets are not included.
 

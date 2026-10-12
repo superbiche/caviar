@@ -4,9 +4,9 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "caviar-redact"
-version = "0.3.0"
+version = "0.3.1"
 description = "Fail-closed redact-v7 client with a self-owned native Go core"
-requires-python = ">=3.14,<3.15"
+requires-python = ">=3.12,<3.15"
 license = "AGPL-3.0-only"
 license-files = ["LICENSE", "docs/THIRD-PARTY-NOTICES.md"]
 readme = "README.md"

@@ -1,0 +1,90 @@
+{
+  "release": "0.3.1",
+  "wheel_sha256": "91e315d1a3a57b5cc3fdd648e3f8d63e80b534ee93a41ac31a9ae818644a22ac",
+  "current_oracles": {
+    "corpus": {
+      "kind": "corpus",
+      "records": 1336,
+      "oracle_python": "3.14.8",
+      "oracle_implementation": "cpython",
+      "reference_sha256": "912dde200e9348bf6f548e99760e8c2a9f245ae0b17baa180663f50a0c82f507",
+      "corpus_sha256": "d17eb1da7ef35fb4c10a9021357576c66443da897a43cef3fc3a58d18d962e67",
+      "seed": null,
+      "generator_sha256": "21fba1bc9ebddf6629562941e17cf4f6194ab9190932603a4ce19c4751411685",
+      "sha256": "2e307d4c56cc11acb24e351cd7da61de7e2ccb22858c89f3429241a867d57a48"
+    },
+    "differential": {
+      "kind": "differential",
+      "records": 40000,
+      "oracle_python": "3.14.8",
+      "oracle_implementation": "cpython",
+      "reference_sha256": "912dde200e9348bf6f548e99760e8c2a9f245ae0b17baa180663f50a0c82f507",
+      "corpus_sha256": "d17eb1da7ef35fb4c10a9021357576c66443da897a43cef3fc3a58d18d962e67",
+      "seed": 13263110,
+      "generator_sha256": "21fba1bc9ebddf6629562941e17cf4f6194ab9190932603a4ce19c4751411685",
+      "sha256": "b3a9b3e963a8b1f9ca1a1a462aaeafc9cca2a666e0f2a534959caf73c54d9728"
+    }
+  },
+  "targets": {
+    "3.12": {
+      "qualification": {
+        "path": "docs/qualification-3.12.json",
+        "sha256": "d1cfcb305a3eb1f9c6602aecab3ab8fccb19983e383311e970a9f9f8d09cbc5c"
+      },
+      "differential": {
+        "path": "docs/differential-3.12.json",
+        "sha256": "81287d5fe0a3d91c83930fda845968e0a6de61f88f78a803011478d06da5ca7e"
+      },
+      "lifecycle": {
+        "exit": 0,
+        "tests": 35,
+        "log_sha256": "ea951f85fb79f3eee7efe29cc7c557935ef5ff9cda65f8a82b982a6c0e750a30"
+      },
+      "ready_identity_mutant": {
+        "exit": 1,
+        "only_ready_identity_guard_removed": true,
+        "scope": "single focused test"
+      }
+    },
+    "3.13": {
+      "qualification": {
+        "path": "docs/qualification-3.13.json",
+        "sha256": "98b1b1f32baefc49c81e5f4d89470f8eab1e295e34f7cbd41fc9dca7a58d7cca"
+      },
+      "differential": {
+        "path": "docs/differential-3.13.json",
+        "sha256": "0d16215fd1b6a928f941e5ed3de9637dac44db881cd74bd7d10d0fbcbfc9240b"
+      },
+      "lifecycle": {
+        "exit": 0,
+        "tests": 35,
+        "log_sha256": "433adeb972547367474e4c57185b2a91f2bb9ebb2da5e5388e51226a724c2dfd"
+      },
+      "ready_identity_mutant": {
+        "exit": 1,
+        "only_ready_identity_guard_removed": true,
+        "scope": "single focused test"
+      }
+    },
+    "3.14": {
+      "qualification": {
+        "path": "docs/qualification-3.14.json",
+        "sha256": "f99e261f16cb6dfab2b8069f6e2b7d8380ad6bfc19ec20955db691a08f10adc5"
+      },
+      "differential": {
+        "path": "docs/differential-3.14.json",
+        "sha256": "30b58b2922747cb6d954f5d055239f234acb9fd2e3a695b631bb3ade57c337cc"
+      },
+      "lifecycle": {
+        "exit": 0,
+        "tests": 35,
+        "log_sha256": "10500afdec2b536259f292bf59886ce1a9b461e9838df74e77e03b85cadf3e01"
+      },
+      "ready_identity_mutant": {
+        "exit": 1,
+        "only_ready_identity_guard_removed": true,
+        "scope": "single focused test"
+      }
+    }
+  }
+}

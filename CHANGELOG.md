@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.3.1
+
+- Qualify the installed Python binding on CPython 3.12, 3.13 and 3.14.
+- Keep the canonical public-reference oracle on CPython 3.14 for each target.
+- Preserve the redact-v7 core, protocol, key custody and fail-closed semantics.
+
 ## 0.3.0
 
 - First public module identity: `github.com/superbiche/caviar`.

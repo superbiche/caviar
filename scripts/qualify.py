@@ -21,19 +21,12 @@ from caviar_redact.client import _manifest_identity
 ROOT = Path(__file__).resolve().parents[1]
 
 
-def materialize(seed):
-    if "input" in seed:
-        return seed["input"]
-    generator = seed["generator"]
-    body = generator["unit"] * generator["count"]
-    if generator["kind"] == "repeat":
-        return generator.get("prefix", "") + body + generator.get("suffix", "")
-    if generator["kind"] == "json-string":
-        return '{"' + generator["key"] + '":"' + body + '"}'
-    raise SystemExit("Unsupported corpus generator")
+from campaign_inputs import materialize
 
 
 def run(args):
+    if sys.implementation.name != "cpython" or sys.version_info[:2] != (3, 14):
+        raise ValueError("direct reference gate requires canonical CPython 3.14; use qualify_compat for targets")
     provenance = json.loads((ROOT / "docs/UPSTREAM.json").read_text())
     counts = provenance["corpus_counts"]
     package_dir = Path(sys.modules["caviar_redact"].__file__).resolve().parent
