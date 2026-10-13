@@ -1,0 +1,25 @@
+{
+  "name": "@superbiche-private/caviar",
+  "version": "0.4.0-rc.2",
+  "type": "module",
+  "description": "Fail-closed Node client and bounded pool for the Caviar native redaction worker",
+  "license": "AGPL-3.0-only",
+  "engines": {
+    "node": ">=24"
+  },
+  "os": [
+    "linux"
+  ],
+  "cpu": [
+    "x64"
+  ],
+  "main": "./lib/index.js",
+  "types": "./lib/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./lib/index.d.ts",
+      "import": "./lib/index.js"
+    }
+  },
+  "workerRelease": "0.4.0"
+}

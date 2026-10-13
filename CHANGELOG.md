@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased
+
+- Prepare a zero-runtime-dependency Node/TypeScript Client and bounded Pool over the existing native worker; installed qualification pending the Safe artifact route.
+
 ## 0.4.0
 
 - Add `Pool`, a bounded pool of N serial workers for concurrent calls. Each

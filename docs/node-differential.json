@@ -1,0 +1,46 @@
+{
+  "node": "v24.18.1",
+  "package_name": "@superbiche-private/caviar",
+  "package_version": "0.4.0-rc.2",
+  "worker_release": "0.4.0",
+  "identity": {
+    "protocol": 1,
+    "release": "0.4.0",
+    "rules": "redact-v7",
+    "source": "ba4ce5b2b7ae1fcb2b39f5c0f9aec13358c05eb7",
+    "corpus": "d17eb1da7ef35fb4c10a9021357576c66443da897a43cef3fc3a58d18d962e67"
+  },
+  "artifact_hashes": {
+    "package.json": "7afc60dbcdd50f142624ec3be37b7349f7a4c0a194936aa61e6d95b5874ccafc",
+    "README.md": "c1170923081138a6c2ae9301e080e1f9e4caa60f042cbc3554e4c3b89365db4f",
+    "LICENSE": "0d96a4ff68ad6d4b6f1f30f713b18d5184912ba8dd389f86aa7710db079abcb0",
+    "THIRD-PARTY-NOTICES.md": "76d581795658a5d6752d1a1d0987891b7334363fe3df96b37ab65e9ca9728360",
+    "src/index.ts": "20a7cb3410eab4e274accbc01b047e341f366c409be321a0c9b2d4a8528bae5b",
+    "lib/index.js": "acb558c00d30374c7d989825f71d322d51679f09fe37548688e4ed114f311bca",
+    "lib/index.d.ts": "9ae2968214bc29db89012f9867cc23ab8d4057a128881327942565e7b541ceb3",
+    "_bin/caviar-redact-worker": "71b7460862cf19a7e6e58c1c373f9463d9bc91048535a6edd4d354093ff5b378",
+    "_bin/manifest.json": "806ca5510388ed836066306983f951375a041cd0d7a011d4a2b038a0aa195d07"
+  },
+  "package_path": "tmp/delivery-work/installed/node/node_modules/@superbiche-private/caviar",
+  "qualification_generator_sha256": "82a5726ef2b62ecd8e608fa7ccd1e6e236ac2228dcf0bbcb04b0cf642a49025a",
+  "oracle": {
+    "kind": "differential",
+    "records": 40000,
+    "oracle_python": "3.14.8",
+    "oracle_implementation": "cpython",
+    "reference_sha256": "912dde200e9348bf6f548e99760e8c2a9f245ae0b17baa180663f50a0c82f507",
+    "corpus_sha256": "d17eb1da7ef35fb4c10a9021357576c66443da897a43cef3fc3a58d18d962e67",
+    "seed": 13263110,
+    "generator_sha256": "21fba1bc9ebddf6629562941e17cf4f6194ab9190932603a4ce19c4751411685",
+    "sha256": "b3a9b3e963a8b1f9ca1a1a462aaeafc9cca2a666e0f2a534959caf73c54d9728"
+  },
+  "comparisons": 40000,
+  "mismatches": [],
+  "samples_per_row": 30,
+  "warmups": 1,
+  "p4_rows": [],
+  "seed": 13263110,
+  "cases": 10000,
+  "worst_ratio": 0,
+  "p4_over_budget": []
+}

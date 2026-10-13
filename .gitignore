@@ -5,3 +5,4 @@ __pycache__/
 *.pyc
 *.egg-info/
 python/caviar_redact/_bin/
+node/_bin/

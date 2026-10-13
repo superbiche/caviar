@@ -68,6 +68,12 @@ for label, command in commands:
         completed = subprocess.run(command, cwd=candidate, env=env, stdout=log, stderr=subprocess.STDOUT)
     if completed.returncode:
         raise SystemExit(label + " failed; private log under tmp/delivery-work")
+    if label == "lifecycle":
+        with (WORK / "hook-node-lifecycle.log").open("w") as log:
+            node_tests = subprocess.run(["python3", "scripts/test_node.py"], cwd=candidate, env=env,
+                                        stdout=log, stderr=subprocess.STDOUT)
+        if node_tests.returncode:
+            raise SystemExit("Node lifecycle/declaration gate failed; private log under tmp/delivery-work")
     receipts[label] = "PASS"
     print(label + ": PASS", flush=True)
 assert not subprocess.check_output(["gofmt", "-l", "cmd", "internal", "redact"], cwd=candidate), "Go format drift"
@@ -79,6 +85,8 @@ receipts["installed_qualification"] = "PASS"
 subprocess.run(["python3", "scripts/check_differential.py"], cwd=candidate, env=env, check=True)
 receipts["installed_differential"] = "PASS"
 subprocess.run(["python3", "scripts/check_compatibility.py"], cwd=candidate, env=env, check=True)
+# Extend this existing artifact gate; absent installed Node receipts fail closed.
+subprocess.run(["python3", "scripts/check_node.py"], cwd=candidate, env=env, check=True)
 receipts["installed_compatibility"] = "PASS"
 scan_tree = WORK / "scan-delivery"
 if scan_tree.exists():
@@ -88,9 +96,14 @@ for name in snapshot:
     target = scan_tree / name
     target.parent.mkdir(parents=True, exist_ok=True)
     shutil.copyfile(candidate / name, target)
+# Scan the added binary/manifest artifact members with the same detector/flags.
+node_artifact = WORK / "scan-node-artifact"
+if node_artifact.exists():
+    shutil.rmtree(node_artifact)
+shutil.copytree(candidate / "node/_bin", node_artifact)
 with (WORK / "hook-secrets.jsonl").open("w") as out, (WORK / "hook-secrets.stderr").open("w") as err:
     scan = subprocess.run(["trufflehog", "filesystem", "--no-update", "--no-verification", "--fail",
-                           "--fail-on-scan-errors", "--json", str(scan_tree)], stdout=out, stderr=err, env=env)
+                           "--fail-on-scan-errors", "--json", str(scan_tree), str(node_artifact)], stdout=out, stderr=err, env=env)
 if scan.returncode:
     raise SystemExit("Secret scan failed; contents withheld")
 receipts["secret_scan"] = "PASS"

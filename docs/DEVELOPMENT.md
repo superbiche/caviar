@@ -99,3 +99,62 @@ The retained compatibility receipts carry predecessor generator SHA256
 `919895a8c1041ce1d1d0195ef7072521a29bbe52e85aa4b742d80ed0cc962dca`
 from measurement before a trailing-newline fix; the regenerated expectation
 streams are byte-identical.
+
+## Node/TypeScript preparation
+
+The local Node package is aligned at 0.4.0-rc.2 and supports Node >=24 on Linux/x64,
+qualified on installed Node 24.18.1. The build uses Node's built-in TypeScript
+type erasure, requires no fetched build tool or runtime dependency, and copies
+worker/manifest bytes from the exact Python wheel. Type declarations are checked
+with installed TypeScript 6.0.3. Earlier Node versions are not qualified.
+
+`make build` builds both wheel and deterministic `dist/superbiche-private-caviar-0.4.0-rc.2.tgz`;
+`make test` includes the existing Python/native gates and source Node lifecycle
+and declaration tests. Those source tests are preparation, not installed evidence.
+The package API and event-loop deadline limitation are in `node/README.md`.
+The root README is unchanged to preserve qualified Python wheel metadata.
+
+The installed artifact route is private Forgejo npm `superbiche-npm` under
+operator ruling a110 (superseding a100). The package name is
+`@superbiche-private/caviar`. Publication belongs to the coordinator, followed
+by an exact-version Safe install; no local-artifact retry is authorized.
+The first local npm tarball command refused version resolution (rc100); do not
+retry or unpack it and label that as an installation. Any install must follow
+that ruling, retain exact tarball SHA and Safe receipt, and disable scripts.
+
+After a compliant installation into the exact ignored target
+`tmp/delivery-work/installed/node/node_modules/@superbiche-private/caviar`, run the lifecycle
+suite with `CAVIAR_NODE_PACKAGE` pointing to that absolute path. Run `python3 scripts/test_node.py --installed` to compile the public declaration
+smoke fixture against the installed declarations and retain its real unit receipt. Generate
+canonical oracle streams using CPython 3.14 as above, then run:
+
+```sh
+node scripts/qualify_node.mjs "$PWD/tmp/delivery-work/installed/node/node_modules/@superbiche-private/caviar" tmp/ts/oracle-corpus.jsonl docs/node-corpus.json
+node scripts/qualify_node.mjs "$PWD/tmp/delivery-work/installed/node/node_modules/@superbiche-private/caviar" tmp/ts/oracle-differential.jsonl docs/node-differential.json
+```
+
+The drivers stream expectations and never print payload values. Corpus runs
+1,336 comparisons and every one of 326 P4 rows, one warmup then median of 30
+full-route calls. Differential runs 10,000 deterministic cases / 40,000
+comparisons. Run `python3 scripts/finalize_node.py` to bind `docs/node-results.json` to the
+exact rebuilt tarball/member hashes, both campaign result hashes and installed
+lifecycle/type receipts. It refuses absent receipts or changed installed bytes.
+Until those real receipts exist, `scripts/check_node.py` and the pre-commit
+hook refuse; no placeholder PASS or source-test substitution is accepted.
+The existing 14 hook gates retain their names; JS build/tests/receipt binding
+extend their artifact sets, and binary/manifest scanning uses the same real
+TruffleHog detector and flags. No source/core/protocol scanner exception is added.
+
+Run Node/Go/worker/scanner gates under `systemd-run --user --scope -p
+MemoryMax=4G -p MemorySwapMax=0` with external timeout and child reaping.
+Pure-Python oracle generation may use an address-space cap; never apply it to
+Go binaries or probes that spawn the worker. Normal host exit cleanup, stopped
+worker deadlines, parallel progress and /proc executable leak checks are part
+of the lifecycle suite. Public publication and consumer adoption remain separate.
+
+For the first private qualification upload, npm package version 0.4.0-rc.2
+is separate from `workerRelease` 0.4.0. The unchanged wheel/worker manifest
+continues to declare worker release 0.4.0; runtime ready checks bind that field,
+not the npm version. The coordinator publishes the frozen private RC, then an
+exact-version Safe install enables installed qualification and the real-hook
+commit. Repairs advance the immutable RC version; stable 0.4.0 waits for PASS.

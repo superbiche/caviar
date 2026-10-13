@@ -80,3 +80,5 @@ def build():
 
 if __name__ == "__main__":
     build()
+    from build_node import build as build_node_package
+    build_node_package()
