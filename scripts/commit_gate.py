@@ -68,6 +68,12 @@ for label, command in commands:
         completed = subprocess.run(command, cwd=candidate, env=env, stdout=log, stderr=subprocess.STDOUT)
     if completed.returncode:
         raise SystemExit(label + " failed; private log under tmp/delivery-work")
+    if label == "wheel_build":
+        with (WORK / "hook-node-build.log").open("w") as log:
+            node_build = subprocess.run(["python3", "scripts/build_node.py"], cwd=candidate, env=env,
+                                       stdout=log, stderr=subprocess.STDOUT)
+        if node_build.returncode:
+            raise SystemExit("Node artifact build failed; private log under tmp/delivery-work")
     if label == "lifecycle":
         with (WORK / "hook-node-lifecycle.log").open("w") as log:
             node_tests = subprocess.run(["python3", "scripts/test_node.py"], cwd=candidate, env=env,

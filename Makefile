@@ -5,9 +5,15 @@ PYTHON ?= python3
 export GOTOOLCHAIN = local
 export GOPROXY = off
 
-.PHONY: test build
-build:
+.PHONY: test build build-python build-node
+build: build-python
+	$(PYTHON) scripts/build_node.py
+
+build-python:
 	$(PYTHON) scripts/build.py
+
+build-node:
+	$(PYTHON) scripts/build_node.py
 
 test:
 	$(PYTHON) scripts/prepare.py

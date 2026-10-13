@@ -124,7 +124,8 @@ function uniqueKeys(text: string): void {
   }
   value(0); ws(); if (i !== text.length) fail('protocol');
 }
-export function decodeJson(data: Uint8Array): Json {
+/** @internal Protocol tooling hook; not a supported consumer API. */
+export function decodeJson(data: Uint8Array, deadline: number = performance.now() + 60000): Json {
   try {
     const text = new TextDecoder('utf-8', {fatal: true}).decode(data);
     uniqueKeys(text);
@@ -135,9 +136,9 @@ export function decodeJson(data: Uint8Array): Json {
       }
       return v;
     });
-    domain(value, RESPONSE_CAP, performance.now() + 60000);
+    domain(value, RESPONSE_CAP, deadline);
     return value;
-  } catch { fail('protocol'); }
+  } catch (e) { if (e instanceof CaviarError && e.code === 'deadline') throw e; fail('protocol'); }
 }
 function exact(value: any, names: string[]): boolean {
   return value !== null && typeof value === 'object' && !Array.isArray(value)
@@ -146,7 +147,6 @@ function exact(value: any, names: string[]): boolean {
 export class Client {
   private key: Buffer | null;
   private timeout: number;
-  private owner = process.pid;
   private closed = false;
   private busy = false;
   private child: any = null;
@@ -157,6 +157,7 @@ export class Client {
   private buffered = 0;
   private expected: number | null = null;
   private timer: any = null;
+  private deadline = 0;
   private reaping: Promise<void> = Promise.resolve();
   constructor(key: Uint8Array | null, opts: Options = {}) {
     const validated = options(key, opts); this.key = validated.key; this.timeout = validated.timeout;
@@ -181,8 +182,9 @@ export class Client {
         if (child._caviarClosed || child.exitCode !== null || child.signalCode !== null) { processes.delete(child); resolve(); }
         else child.once('close', () => { processes.delete(child); resolve(); });
       });
-      if (process.pid === this.owner) child.kill('SIGKILL');
-      else { child.stdin?.destroy(); child.stdout?.destroy(); }
+      // Keep the event loop alive until close/reaping completes.
+      child.ref(); child.stdin?.ref?.(); child.stdout?.ref?.();
+      child.kill('SIGKILL');
     }
   }
   private receive(child: any, chunk: Buffer): void {
@@ -201,7 +203,8 @@ export class Client {
       const pending = this.pending; this.pending = null;
       const data = Buffer.concat(this.chunks, this.buffered);
       this.chunks = []; this.buffered = 0; this.expected = null;
-      try { pending.resolve(decodeJson(data)); } catch { pending.reject(new CaviarError('protocol')); }
+      try { pending.resolve(decodeJson(data, this.deadline)); }
+      catch (e) { pending.reject(new CaviarError(e instanceof CaviarError && e.code === 'deadline' ? 'deadline' : 'protocol')); }
     }
   }
   private exchange(child: any, frame: Buffer): Promise<any> {
@@ -220,7 +223,7 @@ export class Client {
       const manifestPath = fileURLToPath(new URL('manifest.json', directory));
       const ms = await lstat(manifestPath);
       if (!ms.isFile() || ms.isSymbolicLink() || ms.size > 16384) fail('artifact');
-      manifest = decodeJson(await readFile(manifestPath));
+      manifest = decodeJson(await readFile(manifestPath), deadline);
       const pkg = JSON.parse(await readFile(new URL('../package.json', import.meta.url), 'utf8'));
       const id = manifest.identity, up = manifest.upstream;
       if (!exact(id, ['protocol', 'release', 'rules', 'source', 'corpus']) || id.protocol !== 1 || pkg.name !== '@superbiche-private/caviar'
@@ -240,19 +243,28 @@ export class Client {
     child.stdout.on('data', (data: Buffer) => this.receive(child, data));
     child.stdin.on('error', () => { if (this.child === child) this.stop('worker_failure'); });
     child.stdout.on('error', () => { if (this.child === child) this.stop('worker_failure'); });
-    child.on('error', () => { if (this.child === child) this.stop('worker_failure'); });
+    let spawned = false;
+    child.on('error', () => { if (this.child === child) this.stop(spawned ? 'worker_failure' : 'artifact'); });
     child.on('close', () => { child._caviarClosed = true; processes.delete(child); if (this.child === child) this.stop('worker_failure'); });
+    await new Promise<void>((resolve, reject) => {
+      const onError = () => { child.removeListener('spawn', onSpawn); reject(new CaviarError('artifact')); };
+      const onSpawn = () => { spawned = true; child.removeListener('error', onError); resolve(); };
+      child.once('error', onError); child.once('spawn', onSpawn);
+    });
+    remaining(deadline); if (this.closed) fail('closed');
+    if (this.child !== child) fail('worker_failure');
     const ready = await this.exchange(child, encode({kind: 'init', generation: this.generation, protocol: 1,
       plain: this.key === null, key: this.key === null ? null : this.key.toString('base64')}, deadline));
     if (!exact(ready, ['kind', 'generation', ...Object.keys(manifest.identity)]) || ready.kind !== 'ready'
         || ready.generation !== this.generation || Object.keys(manifest.identity).some(k => ready[k] !== manifest.identity[k])) fail('identity');
   }
   private async call(mode: string, value: unknown): Promise<Result> {
-    if (process.pid !== this.owner) fail('forked_client');
     if (this.closed) fail('closed');
     if (this.busy) fail('busy');
     this.busy = true;
     const deadline = performance.now() + this.timeout * 1000;
+    this.deadline = deadline;
+    this.child?.ref(); this.child?.stdin?.ref?.(); this.child?.stdout?.ref?.();
     this.timer = setTimeout(() => this.stop(this.closed ? 'closed' : 'deadline'), this.timeout * 1000);
     try {
       const snapshot = domain(value, REQUEST_CAP, deadline);
@@ -277,7 +289,11 @@ export class Client {
     } catch (e) {
       const code = this.closed ? 'closed' : (e instanceof CaviarError ? e.code : 'worker_failure');
       this.stop(code); await this.reaping; throw new CaviarError(code);
-    } finally { clearTimeout(this.timer); this.timer = null; this.busy = false; }
+    } finally {
+      clearTimeout(this.timer); this.timer = null; this.busy = false;
+      // Idle persistent workers must not prevent natural host exit.
+      this.child?.unref(); this.child?.stdin?.unref?.(); this.child?.stdout?.unref?.();
+    }
   }
 }
 export class Pool {
@@ -285,7 +301,6 @@ export class Pool {
   private free: Client[];
   private waiters: any[] = [];
   private closed = false;
-  private owner = process.pid;
   private acquireTimeout: number;
   constructor(key: Uint8Array | null, size: number, opts: PoolOptions) {
     if (!Number.isInteger(size) || size < 1 || size > 32) fail('invalid_size');
@@ -301,7 +316,6 @@ export class Pool {
     return Promise.all(this.clients.map(c => c.close())).then(() => undefined);
   }
   private acquire(): Promise<Client> {
-    if (process.pid !== this.owner) fail('forked_client');
     if (this.closed) fail('closed');
     const client = this.free.shift(); if (client) return Promise.resolve(client);
     if (!this.acquireTimeout) fail('busy');

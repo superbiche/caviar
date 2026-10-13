@@ -1,6 +1,6 @@
 {
   "name": "@superbiche-private/caviar",
-  "version": "0.4.0-rc.2",
+  "version": "0.4.0",
   "type": "module",
   "description": "Fail-closed Node client and bounded pool for the Caviar native redaction worker",
   "license": "AGPL-3.0-only",

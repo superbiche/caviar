@@ -2,7 +2,8 @@
 
 ## Unreleased
 
-- Prepare a zero-runtime-dependency Node/TypeScript Client and bounded Pool over the existing native worker; installed qualification pending the Safe artifact route.
+- Add the private Node/TypeScript Client and bounded Pool over the existing native worker, with installed corpus/P4/differential qualification.
+- Permit natural host exit with idle workers; match Python artifact errors before spawn, clarify Pool input stability and declare the internal protocol decoder.
 
 ## 0.4.0
 

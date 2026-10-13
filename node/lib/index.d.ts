@@ -21,3 +21,6 @@ export declare class Pool {
   value(value: Json): Promise<Result>;
   close(): Promise<void>;
 }
+
+/** @internal Protocol tooling hook; not a supported consumer API. */
+export declare function decodeJson(data: Uint8Array, deadline?: number): Json;

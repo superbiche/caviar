@@ -2,7 +2,7 @@
 // Copyright (C) 2026 Michel Tomas
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { readdirSync, readlinkSync, existsSync, mkdtempSync, mkdirSync, cpSync, readFileSync, writeFileSync, rmSync } from 'node:fs';
+import { readdirSync, readlinkSync, existsSync, mkdtempSync, mkdirSync, cpSync, readFileSync, writeFileSync, rmSync, chmodSync } from 'node:fs';
 import { createHash } from 'node:crypto';
 import { spawn } from 'node:child_process';
 import { setTimeout as delay } from 'node:timers/promises';
@@ -96,6 +96,7 @@ test('strict wire JSON and domain refusals', async () => {
     assert.throws(()=>decodeJson(Buffer.from(text)),code('protocol'));
   }
   assert.throws(()=>decodeJson(Uint8Array.of(0xff)),code('protocol'));
+  assert.throws(()=>decodeJson(Buffer.from('{}'),0),code('deadline'));
   assert.deepEqual(decodeJson(Buffer.from('{"ordinary":9007199254740993}')),{ordinary:9007199254740993n});
   const c=new Client(key);
   try {
@@ -180,4 +181,28 @@ test('normal host exit kills its worker', {timeout:3000}, async () => {
   }finally{host.kill('SIGKILL');}
 });
 
+test('unclosed idle Client permits natural host exit and reaps worker', {timeout:4000}, async () => {
+  const module=pathToFileURL(dir+'/lib/index.js').href;
+  const script=`import {Client} from ${JSON.stringify(module)};const c=new Client(new Uint8Array(32));await c.string('ordinary');process.stdout.write(String(c.child.pid)+'\\n');`;
+  const host=spawn(process.execPath,['--input-type=module','-e',script],{stdio:['ignore','pipe','ignore']});
+  let out='';host.stdout.on('data',b=>{out+=b;});
+  const exited=new Promise((resolve,reject)=>{host.once('error',reject);host.once('close',resolve);});
+  let timer;
+  try {
+    const rc=await Promise.race([exited,new Promise((_,reject)=>{timer=setTimeout(()=>reject(new Error('idle worker prevented natural exit')),1800);})]);
+    assert.equal(rc,0);const pid=Number(out.trim());assert.ok(Number.isInteger(pid)&&pid>0);
+    for(let i=0;i<50&&existsSync('/proc/'+pid+'/exe');i++)await delay(10);
+    assert.equal(existsSync('/proc/'+pid+'/exe'),false);
+  } finally {clearTimeout(timer);host.kill('SIGKILL');await exited;}
+});
+test('worker without exec permission refuses artifact before init', async () => {
+  mkdirSync('tmp/ts',{recursive:true});const fixture=mkdtempSync('tmp/ts/noexec-');
+  let c;
+  try {
+    cpSync(dir,fixture,{recursive:true});chmodSync(fixture+'/_bin/caviar-redact-worker',0o644);
+    const {Client:FixtureClient}=await import(pathToFileURL(fixture+'/lib/index.js'));
+    c=new FixtureClient(key);await assert.rejects(c.string('ordinary'),e=>e.code==='artifact'&&e.message==='artifact');
+    assert.equal(c.child,null);
+  } finally {if(c)await c.close();rmSync(fixture,{recursive:true,force:true});}
+});
 test('no live package workers after suite',()=>assert.deepEqual(pids(),baseline));

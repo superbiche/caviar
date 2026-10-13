@@ -1,7 +1,7 @@
 {
   "node": "v24.18.1",
   "package_name": "@superbiche-private/caviar",
-  "package_version": "0.4.0-rc.2",
+  "package_version": "0.4.0",
   "worker_release": "0.4.0",
   "identity": {
     "protocol": 1,
@@ -11,13 +11,13 @@
     "corpus": "d17eb1da7ef35fb4c10a9021357576c66443da897a43cef3fc3a58d18d962e67"
   },
   "artifact_hashes": {
-    "package.json": "7afc60dbcdd50f142624ec3be37b7349f7a4c0a194936aa61e6d95b5874ccafc",
-    "README.md": "c1170923081138a6c2ae9301e080e1f9e4caa60f042cbc3554e4c3b89365db4f",
+    "package.json": "9685166b64c7f36966c046c885738d15fc2d0132ce66a453fda32dca8de374aa",
+    "README.md": "7f2072581740f8528ffb7b204bef0f7a4c9369f9b833809601eaecfa32d0e02c",
     "LICENSE": "0d96a4ff68ad6d4b6f1f30f713b18d5184912ba8dd389f86aa7710db079abcb0",
     "THIRD-PARTY-NOTICES.md": "76d581795658a5d6752d1a1d0987891b7334363fe3df96b37ab65e9ca9728360",
-    "src/index.ts": "20a7cb3410eab4e274accbc01b047e341f366c409be321a0c9b2d4a8528bae5b",
-    "lib/index.js": "acb558c00d30374c7d989825f71d322d51679f09fe37548688e4ed114f311bca",
-    "lib/index.d.ts": "9ae2968214bc29db89012f9867cc23ab8d4057a128881327942565e7b541ceb3",
+    "src/index.ts": "0ee10b0ea3d6df62cdb6ee6439c0d6201b0f8e0f1d34843731b3d356518cd1dd",
+    "lib/index.js": "e829cdf72485458aad9c965cbc6cc2ac6fde70fbb6a48cc393db9eab8f6cd29e",
+    "lib/index.d.ts": "cd9b10ddb0bc1129620454c1db91105b5862d986224d58218d1bf4c47cccba04",
     "_bin/caviar-redact-worker": "71b7460862cf19a7e6e58c1c373f9463d9bc91048535a6edd4d354093ff5b378",
     "_bin/manifest.json": "806ca5510388ed836066306983f951375a041cd0d7a011d4a2b038a0aa195d07"
   },

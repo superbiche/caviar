@@ -102,13 +102,15 @@ streams are byte-identical.
 
 ## Node/TypeScript preparation
 
-The local Node package is aligned at 0.4.0-rc.2 and supports Node >=24 on Linux/x64,
+The local Node package is aligned at 0.4.0 and supports Node >=24 on Linux/x64,
 qualified on installed Node 24.18.1. The build uses Node's built-in TypeScript
 type erasure, requires no fetched build tool or runtime dependency, and copies
 worker/manifest bytes from the exact Python wheel. Type declarations are checked
 with installed TypeScript 6.0.3. Earlier Node versions are not qualified.
 
-`make build` builds both wheel and deterministic `dist/superbiche-private-caviar-0.4.0-rc.2.tgz`;
+`make build-python` builds the wheel without requiring Node; `make build-node`
+builds the Node artifact from an existing exact wheel. Aggregate `make build`
+builds both wheel and deterministic `dist/superbiche-private-caviar-0.4.0.tgz`;
 `make test` includes the existing Python/native gates and source Node lifecycle
 and declaration tests. Those source tests are preparation, not installed evidence.
 The package API and event-loop deadline limitation are in `node/README.md`.
@@ -152,9 +154,9 @@ Go binaries or probes that spawn the worker. Normal host exit cleanup, stopped
 worker deadlines, parallel progress and /proc executable leak checks are part
 of the lifecycle suite. Public publication and consumer adoption remain separate.
 
-For the first private qualification upload, npm package version 0.4.0-rc.2
-is separate from `workerRelease` 0.4.0. The unchanged wheel/worker manifest
-continues to declare worker release 0.4.0; runtime ready checks bind that field,
-not the npm version. The coordinator publishes the frozen private RC, then an
-exact-version Safe install enables installed qualification and the real-hook
-commit. Repairs advance the immutable RC version; stable 0.4.0 waits for PASS.
+The stable npm package version0.4.0 is distinct from `workerRelease`0.4.0:
+only the worker field binds the manifest/ready identity. Private qualification
+prereleases rc.1/rc.2 remain immutable. The coordinator publishes the frozen
+stable artifact; one exact Safe install with `--ignore-scripts` and full installed
+requalification precedes the normal commit and promotion delta review. Consumers
+adopt only after that review. No public npm action is part of this slice.

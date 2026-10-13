@@ -14,3 +14,8 @@ new Client('key');
 // @ts-expect-error Pool admission timeout is required
 new Pool(null,2,{});
 void [t,v,closed,code];
+
+import { decodeJson } from '../lib/index.js';
+const internalDecoded = decodeJson(new Uint8Array(), 123);
+// @ts-expect-error internal decoder still has a typed byte input
+decodeJson("unsupported");
